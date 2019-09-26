@@ -1,0 +1,745 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Esempi di Kotlin</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Esempi di Kotlin</h1>
+				</section>
+
+				<!-- Introduzione -->
+				<section>
+					<h2>Kotlin</h2>
+					<ul>
+						<li>Programmazione ad oggetti</li>
+						<li>Programmazione funzionale</li>
+						<li>Staticamente tipizzato</li>
+						<li>Inferenza dei tipi</li>
+						<li>Crossplatform</li>
+						<li>Interoperabile con Java</li>
+					</ul>
+				</section>
+
+				<!-- Interoperabilità -->
+				<section>
+					<section>
+						<h2>Interoperabilità</h2>
+						Kotlin, Java e JVM
+					</section>
+					<section>
+						<h3>Kotlin -> Java</h3>
+						<ul>
+							<li>Librerie Apache</li>
+							<li>Jackson</li>
+							<li>Hibernate</li>
+							<li>Spring</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Kotlin <- Java</h3>
+						<ul>
+							<li>Kotlin all'interno di codebase Java</li>
+							<li>Utilizzare librerie Kotlin da Java</li>
+						</ul>
+					</section>
+				</section>
+				
+				<!-- Crossplatform e modi di esecuzione -->
+				<section>
+					<section>
+						<h2>Cossplatform</h2>
+						<ul>
+							<li>JVM</li>
+							<li>Nativo</li>
+							<li>Transpilato in JavaScript</li>
+						</ul>
+					</section>
+					<section>
+						<h2>... Inoltre</h2>
+						<ul>
+							<li>REPL</li>
+							<li>script</li>
+						</ul>
+					</section>
+				</section>
+
+				<!-- Hello world -->
+				<section>
+					<h2>Hello world</h2>
+					<pre><code>
+						fun main() {
+							println("Hello world!")
+						}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>Links</h3>
+				</section>
+
+				<section>
+					<h3>Grazie!</h3>
+					<p>
+						<a href="https://simonedegiacomi.dev">simonedegiacomi.dev</a>
+					</p>
+				</section>
+
+				<!-- Variabili -->
+				<section>
+					<section>
+						<h4>Dichiarazioni di variabili</h4>
+					</section>
+					<section>
+						<!--<pre><code>
+							val a: Int = 42
+						</code></pre>-->
+
+						<pre><code>
+							val a = 42
+						</code></pre>
+						
+						<!--<div class="fragment">
+							<pre><code>
+								val a = 42
+								a = 4 // errore di compilazione
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								var a = 42
+								a = 4
+							</code></pre>
+						</div>-->
+						<div class="fragment">
+							<pre><code>
+								var a = 3
+								a = "Ciao" // errore di compilazione
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>String templates</h4>
+						<pre><code>
+							val nome = "Kotlin"
+							val messaggio = "Ciao $nome!"
+							// Ciao Kotlin!
+						</code></pre>
+						<div class="fragment">
+							<pre><code>
+								val nome = "Kotlin"
+								val messaggio = "$nome è lungo ${nome.length} caratteri"
+								// Kotlin è lungo 6 caratteri
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>Null safety</h4>
+						<!--<pre><code>
+							val nome: String = null
+							// errore di compilazione
+						</code></pre>
+						<div class="fragment">
+							<pre><code>
+								val nome: String? = null
+							</code></pre>
+						</div>
+						
+						<pre><code>
+							val nome: String? = null
+
+							println("valore: ${nome.length}") // errore di compilazione
+						</code></pre>-->
+						
+						
+						<pre><code>
+							val nome: String? = null
+
+							if (nome != null) {
+								println("valore: ${nome.length}")
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val messaggio = getMessaggio()
+
+							if (messaggio != null) {
+								messaggio.invia()
+								val caratteri = messaggio.length
+							}
+						</code></pre>
+						
+						<div class="fragment">
+							<pre><code>
+								val messaggio = getMessaggio()
+								
+								messaggio?.invia()
+								val caratteri = messaggio?.length
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								val messaggio = getMessaggio()
+								messaggio!!.invia()
+								// errore durante l'esecuzione se messaggio è null
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>lateinit</h4>
+						<pre><code>
+							lateinit var nome: String
+
+							nome = "Kotlin"
+
+							println("Ciao $nome")
+						</code></pre>
+
+						<div class="fragment">
+							<pre><code>
+								lateinit var nome: String
+
+								println("Ciao $nome")
+								// kotlin.UninitializedPropertyAccessException
+							</code></pre>
+						</div>
+					</section>
+				</section>
+
+
+				<!-- Collezioni -->
+				<section>
+					<section>
+						<h4>Collezioni</h4>
+						List, Set e Map
+					</section>
+					<section>
+						<h4>Mutabilità</h4>
+						<table>
+							<tr>
+								<td>
+									List
+								</td>
+								<td>
+									MutableList
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Set
+								</td>
+								<td>
+									MutableSet
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Map
+								</td>
+								<td>
+									MutableMap
+								</td>
+							</tr>
+						</table>
+					</section>
+
+					<!-- listOf -->
+					<section>
+						<pre><code>
+							val numeri = listOf(1, 2, 3)
+							val numeriB = mutableListOf(1, 2, 3)
+						</code></pre>
+						<div class="fragment">
+							<pre><code>
+								val numeri = listOf(1, 2, 3)
+								val numeriB = numeri.toMutableList()
+							</code></pre>
+						</div>
+					</section>
+					
+					<!-- setOf -->
+					<section>
+						<pre><code>
+							val numeri = setOf(1, 2, 3)
+							val numeriB = mutableSetOf(1, 2, 3)
+						</code></pre>
+
+						<pre><code>
+							val numeri = mapOf("uno" to 1, "due" to 2, "tre" to 3)
+							val numeriB = mutableMapOf("uno" to 1, "due" to 2 )
+						</code></pre>
+					</section>
+
+					<!-- Array -->
+					<section>
+						Array
+
+						<pre><code>
+							val numeri = arrayOf(1, 2 ,3)
+						</code></pre>
+					</section>				
+				</section>
+
+				<!-- Controllo -->
+				<section>
+					<section>
+						<h2>Controllo</h2>
+					</section>
+					<section>
+						<h4>If</h4>
+						<pre><code>
+							val contatore = 3
+							if (contatore > 3) {
+								println(contatore)
+							}
+						</code></pre>
+						<div class="fragment">
+							<p>If anche come espressione</p>
+							<pre><code>
+								val contatore = 3
+								val stato = if (contatore > 3) {
+									"più di 3"
+								} else {
+									"meno di tre"
+								}
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>Cicli for</h4>
+						<pre><code>
+							for (i in 1..10) {
+								println(i)
+							}
+							// 1, 2, 3, 4, 5, 6, 7, 8, 9 10
+						</code></pre>
+
+						<div class="fragment">
+							<pre><code>
+								for (i in 1..10 step 2) {
+									println(i)
+								}
+								// 1, 3, 5, 7, 9
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								for (i in 5 downTo 1) {
+									println(i)
+								}
+								// 5, 4, 3, 2, 1
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								for (i in 5 downTo 1 step 2) {
+									println(i)
+								}
+								// 5, 3, 1
+							</code></pre>
+						</div>
+
+					</section>
+
+					<section>
+						<h4>When</h4>
+						<pre><code>
+							val x = 5
+							when (x) {
+								1 -> println("uno")
+								2 -> println("due")
+								else -> println("un numero")
+							}
+						</code></pre>
+
+						<div class="fragment">
+							<pre><code>
+								val x = 5
+								when (x) {
+									1, 2 -> println("uno o due")
+									in 3..10 -> println("3 <= x <= 10")
+									!in 11..20 -> println("x > 20")
+									else -> println("11 < x <= 20")
+								}
+							</code></pre>
+						</div>
+					</section>
+				</section>
+
+				<!-- Funzioni -->
+				<section>
+					<section>
+						<h4>Dichiarazione di funzioni</h4>
+					</section>
+					<section>
+						<pre><code>
+							fun somma (a: Int, b: Int): Int {
+								return a + b
+							}
+						</code></pre>
+						
+						<div class="fragment">
+							<p>Espressioni come funzioni</p>
+							<pre><code>
+								fun somma (a: Int, b: Int) = a + b
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h5>Valori di default</h5>
+
+						<pre><code>
+							fun leggiCsv (nomeFile: String, separatore: String = ",") {
+								// ...
+							}
+
+							leggiCsv("file.csv", ";")
+							leggiCsv("file.csv")
+						</code></pre>
+					</section>
+					<section>
+
+						<h5>Nomi degli argomenti</h5>
+
+						<pre><code>
+							fun leggiCsv (nomeFile: String, separatore: String) {
+								// ...
+							}
+
+							leggiCsv(nomeFile = "file.csv", separatore = ";")
+							leggiCsv("file.csv", separatore = ";")
+						</code></pre>						
+					</section>
+
+
+					<section>
+						<h4>Assegnare funzioni a variabili</h4>
+						<pre><code>
+							fun somma (a: Int, b: Int) = a + b
+							// (Int, Int) -> Int
+						</code></pre>
+
+						<div class="fragment">
+							<pre><code>
+								fun somma (a: Int, b: Int) = a + b
+								
+								val f = ::somma
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>Lambda</h4>
+
+						<pre><code>
+							val duplica = { n: Int -> n * 2 }
+						</code></pre>
+
+						<div class="fragment">
+							<pre><code>
+								val duplica: (Int) -> Int = { n -> n * 2 }
+							</code></pre>
+						</div>
+
+						<div class="fragment">
+							<pre><code>
+								val duplica: (Int) -> Int = { it * 2 }
+							</code></pre>
+						</div>
+					</section>
+
+				</section>
+
+
+				<!-- Programmazione ad oggetti -->
+				<section>
+					<section>
+						<h3>Classi</h3>
+					</section>
+					<section>
+						<pre><code>
+							class Libro
+						</code></pre>
+						<div class="fragment">
+							<pre><code>
+								class Libro(val titolo: String, val autore: String)
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								class Libro(val titolo: String, val autore: String) {
+									
+
+									init {
+										// ...
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="fragment">
+							<pre><code>
+								val libro = Libro("Clean Code", "Bob C. Martin")
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<pre><code>
+							data class Libro(val titolo: String, val autore)
+						</code></pre>
+						<div class="fragment">
+							<ul>
+								<li>hashCode</li>
+								<li>equals</li>
+								<li>toString</li>
+								<li>copy</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<pre><code>
+							data class Libro(val titolo: String, val autore)
+
+							val cleanCode = Libro("Clean Code", "Bob C. Martin")
+							val theCleanCoder = a.copy(titolo = "The Clean Coder")
+						</code></pre>
+					</section>
+					<section>
+						getters/setters
+
+						<pre><code>
+							class Lista () {
+
+								val vuota: Boolean
+									get () = elemento == 0
+
+							}
+						</code></pre>
+
+						<div class="fragment">
+						<pre><code>
+							class Libro(val titolo: String, val autore) {
+									
+								prezzo: Int = 0
+									get() = value
+									set(value) {
+										if (value >= 0) {
+											field = value 
+										}
+									}
+							}
+						</code></pre>
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Extension functions</h4>
+						<pre><code>
+							2.moltiplicaPer(3)
+
+							fun Int.moltiplicaPer(n: Int) = this * n
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val lista = listOf(1, 2)
+							lista.scambia(0, 1)
+
+							fun MutableList&lt;Int&gt;.scambia(indice1: Int, indice2: Int) {
+    				val tmp = this[index1]
+    				this[index1] = this[index2]
+    				this[index2] = tmp
+							}
+						</code></pre>
+						<div class="fragment">
+							<pre><code>
+								fun T MutableList&lt;T&gt;.scambia(indice1: Int, indice2: Int) {
+	    				val tmp = this[index1]
+	    				this[index1] = this[index2]
+	    				this[index2] = tmp
+								}
+							</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4>Extension properties</h4>
+						<pre><code>
+							2.pari
+
+							val Int.pari get () = this % 2 == 0
+						</code></pre>
+					</section>
+				</section>
+
+
+				<!-- ??? -->
+				<section>
+					<section>
+						<h4>Simili a Java Stream</h4>
+					</section>
+					<section>
+						<pre><code>
+							val colori = listOf("Nero", "Rosso", "Giallo", "Blu")
+							colori.map { it.length }
+								.filter { it % 2 != 0 }
+								.take(1)
+
+							// 4
+						</code></pre>
+					</section>
+					<section>
+						<h4>partition</h4>
+						<pre><code>
+							val numeri = listOf(1, 3, 6, 9)
+							val pari = numeri.partition { it % 2 == 0 }
+						</code></pre>
+					</section>
+					<section>
+						<h4>associate by</h4>
+						<pre><code>
+							val libri = listOf(
+								Libro("The Pragmatic programmer", "Andy Hunt, Dave Thomas")
+								Libro("Clean Code", "Bob C. Martin")
+							)
+							val libriPerAutori = libri.associateBy{ it.autore }
+						</code></pre>
+					</section>
+				</section>
+
+				<!-- Scope functions -->
+				<section>
+					<section>
+						<h2>Scope functions</h2>
+						<div class="fragment">
+							<ul>
+								<li>let</li>
+								<li>with</li>
+								<li>run</li>
+								<li>also</li>
+								<li>apply</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<pre><code>
+							val serverConfiguration = ...
+							with (serverconfiguration) {
+								// this = serverConfiguration
+								port = 8443
+								useHTTPS = true
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val serverConfiguration: Configuration? = ...
+							serverConfiguration.?run {
+								// this = serverConfiguration
+								port = 8443
+								useHTTPS = true
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val numeri = listOf(1, 2, 3, 4, 5)
+							val conteggioNumeriPari = numeri.run {
+								// it = numeri
+								count { it % 2 == 0}
+							}
+
+							// il valore ritornato dalla lambda viene ritornato da let
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val unLibro = Libro("Kotlin in action").apply {
+								annoPubblicazione = "Febbraio 2017"
+								pagine = 360
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							val dataRilascioKotlin = run {
+								val giorno = 15
+								val mese = "Febbraio"
+								val anno = 2016
+
+								"$giorno $mese $anno"
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code>
+							var a = 1
+							var b = 2
+
+							a = b.also { b = a }
+
+							// a = 2, b = 1
+						</code></pre>
+					</section>
+				</section>
+
+				<!-- IDE support -->
+				<!--
+					destructuring
+					IDE support
+				-->
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			document.querySelectorAll('code')
+				.forEach(snippet => {
+					snippet.classList.add('kotlin')
+					snippet.setAttribute('data-trim', '');
+					snippet.setAttribute('data-line-numbers', '');
+				});
+
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				],
+				history: true,
+				progress: false,
+
+				transitionSpeed: 'fast'
+			});
+		</script>
+
+
+	</body>
+</html>
